@@ -1,0 +1,45 @@
+
+body {
+    user-select: none;
+    background-image: linear-gradient(to bottom, #32a9f8, #ffffff);
+    height: 100vh;
+}
+#nav {
+    background-color: #32a9f8;
+    width: 102%;
+    height: 70px;
+    margin-left: -20px;
+    margin-top: -20px;
+    position: fixed;
+    box-shadow: 12px 2px 20px black;
+}
+#logo {
+    position: fixed;
+    scale: 5%;
+    margin-top: -518px;
+    margin-left: -500px;
+}
+#logo:hover {
+    filter: brightness(1.2);
+}
+#for {
+    color: rgb(255, 255, 255);
+    position: fixed;
+    margin-top: 10px;
+    margin-left: 70px;
+    text-shadow: white 0px 0px 10px;
+}
+#seven {
+    position: fixed;
+    color: rgb(207, 207, 207);
+    margin-top: 10px;
+    margin-left: 115px;
+    text-shadow: white 0px 0px 10px;
+}
+#rum {
+    position: fixed;
+    color: rgb(255, 255, 255);
+    margin-top: 10px;
+    margin-left: 130px;
+    text-shadow: white 0px 0px 10px;
+}
