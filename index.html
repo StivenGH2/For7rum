@@ -13,4 +13,86 @@
     <h1 id="seven">7</h1>
     <h1 id="rum">rum</h1>
 </body>
-</html>
+<div class="editable-container" contenteditable="true" oninput="reemplazarLogo()">
+  </div>
+  
+  <script>
+function reemplazarLogo() {
+  const container = document.querySelector('.editable-container');
+  let selection = window.getSelection();
+  
+  if (!selection.rangeCount) return;
+  
+  let range = selection.getRangeAt(0);
+  let startContainer = range.startContainer;
+  let startOffset = range.startOffset;
+
+  const replacements = {
+    ':logo:': '<img src="https://stivengh2.github.io/For7rum/Logo%20de%20foro.png" alt="Logo" class="emoji">',
+    ':stiven:': '<img src="https://avatars.githubusercontent.com/u/191794075?v=4" alt="Logo2" class="emoji">',
+    ':happy:': '<img src="https://stivengh2.github.io/For7rum/smile.png" alt="happyemoji" class="emoji">',
+    ':sad:': '<img src="https://stivengh2.github.io/For7rum/sad.png" alt="sademoji" class="emoji">',
+    ':angry:': '<img src="https://stivengh2.github.io/For7rum/angry.png" alt="angryemoji" class="emoji">',
+    ':sob:': '<img src="https://stivengh2.github.io/For7rum/sob.png" alt="sobemoji" class="emoji">',
+  };
+
+  // Buscar y reemplazar solo en nodos de texto
+  function replaceTextNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      let newText = node.nodeValue;
+      let replaced = false;
+
+      Object.keys(replacements).forEach((key) => {
+        if (newText.includes(key)) {
+          newText = newText.replace(new RegExp(key, 'g'), replacements[key]);
+          replaced = true;
+        }
+      });
+
+      if (replaced) {
+        let span = document.createElement('span');
+        span.innerHTML = newText;
+        node.replaceWith(...span.childNodes);
+      }
+    }
+  }
+
+  // Recorrer los nodos dentro del contenedor y aplicar los reemplazos
+  container.childNodes.forEach(replaceTextNode);
+
+  // Restaurar la posición del cursor
+  let newRange = document.createRange();
+  let newSelection = window.getSelection();
+
+  try {
+    newRange.setStart(startContainer, Math.min(startOffset, startContainer.length || 0));
+    newRange.collapse(true);
+    newSelection.removeAllRanges();
+    newSelection.addRange(newRange);
+  } catch (e) {
+    console.warn("No se pudo restaurar la posición del cursor:", e);
+  }
+}
+
+  </script>
+  
+  <style>
+    .editable-container {
+      border: 1px solid #8b8181;
+      padding: 10px;
+      width: 300px;
+      min-height: 50px;
+      font-size: 20px;
+      line-height: 1.5;
+      overflow: auto;
+      background-color: rgb(105, 105, 105); /* Fondo blanco */
+      z-index: 9999; /* Z-index alto */
+      position: relative; /* Necesario para que z-index funcione */
+    }
+    .editable-container img {
+      display: inline-block;
+      width: 40px; /* Tamaño de la imagen */
+      height: 40px;
+      vertical-align: middle; /* Alinea la imagen como un emoji */
+    }
+  </style>
